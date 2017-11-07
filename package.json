@@ -1,0 +1,30 @@
+{
+  "name": "donation-web",
+  "version": "1.0.0",
+  "description": "an application to host donations for candidates",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^6.0.0",
+    "handlebars": "^4.0.5",
+    "hapi": "^14.1.0",
+    "hapi-auth-cookie": "^6.1.1",
+    "inert": "^4.0.1",
+    "joi": "^9.0.4",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.5.8",
+    "mongoose-seeder": "^1.2.1",
+    "uuid": "^3.1.0",
+    "vision": "^4.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "sync-request": "^4.1.0"
+  }
+}
