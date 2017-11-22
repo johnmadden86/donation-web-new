@@ -12,7 +12,7 @@ suite('User API tests', function () {
   let users = fixtures.users;
   let newUser = fixtures.newUser;
 
-  const donationService = new DonationService('http://localhost:4000');
+  const donationService = new DonationService(fixtures.donationService);
 
   beforeEach(function () {
     donationService.deleteAllUsers();
@@ -22,7 +22,7 @@ suite('User API tests', function () {
     donationService.deleteAllUsers();
   });
 
-  test('create a candidate', function () {
+  test('create a user', function () {
     const returnedUser = donationService.createUser(newUser);
     assert(_.some([returnedUser], newUser), 'returnedUser must be a superset of newUser');
     assert.isDefined(returnedUser._id);

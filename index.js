@@ -2,12 +2,13 @@
 
 const Hapi = require('hapi');
 
-
-var server = new Hapi.Server();
+const server = new Hapi.Server();
 server.connection({ port: process.env.PORT || 4000 });
 
 require('./app/models/db');
 
+// 20077700@mail.wit.ie
+// YA8W48JrVRq4
 server.register([require('inert'), require('vision'), require('hapi-auth-cookie')], err => {
 
   if (err) {

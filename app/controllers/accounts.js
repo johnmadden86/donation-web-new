@@ -3,6 +3,26 @@
 const User = require('../models/user');
 const Joi = require('joi');
 
+function setCookie(request, userId) {
+  request.cookieAuth.set({
+    loggedIn: true,
+    loggedInUser: userId,
+  });
+  console.log('Cookie set: ' + userId);
+}
+
+function clearCookie(request) {
+  request.cookieAuth.set({
+    loggedIn: false,
+    loggedInUser: null,
+  });
+}
+
+function getLoggedInUser(request) {
+  const userId = request.auth.credentials.loggedInUser;
+  return User.findOne({ _id: userId });
+}
+
 exports.main = {
   auth: false,
   handler: function (request, reply) {
@@ -50,12 +70,14 @@ exports.register = {
 
   handler: function (request, reply) {
     const user = new User(request.payload);
-
-    user.save().then(newUser => {
-      reply.redirect('/login');
-    }).catch(err => {
-      reply.redirect('/');
-    });
+    user.save()
+        .then(newUser => {
+          setCookie(request, newUser._id);
+          reply.redirect('/home');
+        })
+        .catch(err => {
+          reply.redirect('/');
+        });
   },
 
 };
@@ -86,19 +108,18 @@ exports.authenticate = {
 
   handler: function (request, reply) {
     const user = request.payload;
-    User.findOne({ email: user.email }).then(foundUser => {
-      if (foundUser && foundUser.password === user.password) {
-        request.cookieAuth.set({
-          loggedIn: true,
-          loggedInUser: user.email,
+    User.findOne({ email: user.email })
+        .then(foundUser => {
+          if (foundUser && foundUser.password === user.password) {
+            setCookie(request, foundUser._id);
+            reply.redirect('/home');
+          } else {
+            reply.redirect('/login');
+          }
+        })
+        .catch(err => {
+          reply.redirect('/');
         });
-        reply.redirect('/home');
-      } else {
-        reply.redirect('/signup');
-      }
-    }).catch(err => {
-      reply.redirect('/');
-    });
   },
 
 };
@@ -115,12 +136,13 @@ exports.logout = {
 exports.viewSettings = {
 
   handler: function (request, reply) {
-    var userEmail = request.auth.credentials.loggedInUser;
-    User.findOne({ email: userEmail }).then(foundUser => {
-      reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
-    }).catch(err => {
-      reply.redirect('/');
-    });
+    getLoggedInUser(request)
+        .then(foundUser => {
+          reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
+        })
+        .catch(err => {
+          reply.redirect('/');
+        });
   },
 
 };
@@ -150,20 +172,20 @@ exports.updateSettings = {
   },
 
   handler: function (request, reply) {
-    const editedUser = request.payload;
-    const loggedInUserEmail = request.auth.credentials.loggedInUser;
-
-    User.findOne({ email: loggedInUserEmail }).then(user => {
-      user.firstName = editedUser.firstName;
-      user.lastName = editedUser.lastName;
-      user.email = editedUser.email;
-      user.password = editedUser.password;
-      return user.save();
-    }).then(user => {
-      reply.view('settings', { title: 'Edit Account Settings', user: user });
-    }).catch(err => {
-      reply.redirect('/');
-    });
+    const updatedUser = request.payload;
+    getLoggedInUser(request)
+        .then(user => {
+          user.firstName = updatedUser.firstName;
+          user.lastName = updatedUser.lastName;
+          user.email = updatedUser.email;
+          user.password = updatedUser.password;
+          return user.save();
+        })
+        .then(user => {
+          reply.view('settings', { title: 'Edit Account Settings', user: user });
+        })
+        .catch(err => {
+          reply.redirect('/');
+        });
   },
-
 };

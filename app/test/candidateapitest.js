@@ -1,6 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
+
 // const request = require('sync-request');
 const DonationService = require('./donation-service');
 const fixtures = require('./fixtures.json');

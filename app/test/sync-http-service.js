@@ -26,7 +26,7 @@ class SyncHttpService {
     return returnedObj;
   }
 
-  delete (url) {
+  delete(url) {
     const res = request('DELETE', this.baseUrl + url);
     return res.statusCode;
   }
