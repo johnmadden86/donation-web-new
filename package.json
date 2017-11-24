@@ -16,6 +16,7 @@
     "hapi-auth-cookie": "^6.1.1",
     "inert": "^4.0.1",
     "joi": "^9.0.4",
+    "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.5.8",
     "mongoose-seeder": "^1.2.1",

@@ -4,7 +4,7 @@ const Donation = require('../models/donation');
 const Boom = require('boom');
 const utils = require('./utils.js');
 
-exports.find = {
+exports.findAllDonations = {
   auth: false,
   handler: function (request, reply) {
     Donation.find({})
@@ -19,7 +19,7 @@ exports.find = {
   },
 };
 
-exports.findForCandidate = {
+exports.findDonationsForCandidate = {
 
   auth: false,
 

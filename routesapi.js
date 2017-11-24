@@ -15,11 +15,13 @@ module.exports = [
   { method: 'DELETE', path: '/api/candidates/{id}', config: CandidatesApi.deleteOne },
   { method: 'DELETE', path: '/api/candidates', config: CandidatesApi.deleteAll },
 
-  { method: 'GET', path: '/api/donations', config: DonationsApi.find },
-  { method: 'GET', path: '/api/candidates/{id}/donations', config: DonationsApi.findForCandidate },
+  { method: 'GET', path: '/api/donations', config: DonationsApi.findAllDonations },
+  { method: 'GET', path: '/api/candidates/{id}/donations', config: DonationsApi.findDonationsForCandidate },
   { method: 'POST', path: '/api/candidates/{id}/donations', config: DonationsApi.makeDonation },
   { method: 'DELETE', path: '/api/donations', config: DonationsApi.deleteAllDonations },
   { method: 'DELETE', path: '/api/candidates/{id}/donations', config: DonationsApi.deleteAllDonationsForCandidate },
   { method: 'DELETE', path: '/api/candidates/{candidateId}/donations/{donationId}', config: DonationsApi.deleteOneDonationForCandidate },
+
+  { method: 'POST', path: '/api/users/authenticate', config: UsersApi.authenticate },
 ];
 

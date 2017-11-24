@@ -2,6 +2,7 @@
 
 const User = require('../models/user');
 const Boom = require('boom');
+const utils = require('./utils.js');
 
 exports.find = {
   auth: false,
@@ -76,9 +77,16 @@ exports.authenticate = {
     User.findOne({ email: user.email }).then(foundUser => {
       if (foundUser && foundUser.password === user.password) {
         const token = utils.createToken(foundUser);
-        reply({ success: true, token: token, user: foundUser }).code(201);
+        reply({
+          success: true,
+          token: token,
+          user: foundUser,
+        }).code(201);
       } else {
-        reply({ success: false, message: 'Authentication failed. User not found.' }).code(201);
+        reply({
+          success: false,
+          message: 'Authentication failed. User not found.',
+        }).code(201);
       }
     }).catch(err => {
       reply(Boom.notFound('internal db failure'));
