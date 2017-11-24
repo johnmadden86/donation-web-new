@@ -2,6 +2,7 @@
 
 const Donation = require('../models/donation');
 const Boom = require('boom');
+const utils = require('./utils.js');
 
 exports.find = {
   auth: false,
@@ -48,6 +49,30 @@ exports.makeDonation = {
           reply(Boom.badImplementation('error making donation'));
         });
   },
+};
+
+exports.makeDonation = {
+
+  auth: false, // {strategy: 'jwt',},
+
+  handler: function (request, reply) {
+    const donation = new Donation(request.payload);
+    donation.candidate = request.params.id;
+    donation.donor = utils.getUserIdFromRequest(request);
+    donation.save()
+        .then(
+            (newDonation) => {Donation.findOne(newDonation).populate('candidate').populate('donor');}
+            )
+        .then(
+            (newDonation) => {reply(newDonation).code(201);}
+            )
+        .catch(
+            (err) => {
+          reply(Boom.badImplementation('error making donation'));
+        }
+        );
+  },
+
 };
 
 exports.deleteAllDonations = {

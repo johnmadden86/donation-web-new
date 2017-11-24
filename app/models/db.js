@@ -6,6 +6,7 @@ mongoose.Promise = global.Promise;
 let dbURI = 'mongodb://localhost/donation';
 
 //dbURI = 'mongodb://mytweetwebusername:mytweetwebpassword@ds245805.mlab.com:45805/mytweetweb';
+dbURI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
 
 // heroku config:set NODE_ENV="production"
 // heroku config:set MONGOLAB_URI=mongodb://donationuser:password@ds251435.mlab.com:51435/donation
@@ -14,9 +15,8 @@ let dbURI = 'mongodb://localhost/donation';
 // address: ds251435.mlab.com
 // port: 51435
 // database: donation
-
-
 // YA8W48JrVRq4
+
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGOLAB_URI;
 }
@@ -37,8 +37,8 @@ mongoose.connection.on('disconnected', function () {
 
 mongoose.connection.on('connected', function () {
   console.log('Mongoose connected to ' + dbURI);
-  if (process.env.NODE_ENV != 'production') {
-    var seeder = require('mongoose-seeder');
+  if (process.env.NODE_ENV !== 'production') {
+    const seeder = require('mongoose-seeder');
     const data = require('./data.json');
     const Donation = require('./donation');
     const User = require('./user');

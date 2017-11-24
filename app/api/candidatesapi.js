@@ -26,9 +26,9 @@ exports.findOne = {
         .then(candidate => {
           if (candidate !== null) {
             reply(candidate);
-          } //else {
+          } else {
             reply(Boom.notFound('id not found'));
-          //}
+          }
         }).catch(err => {
       reply(Boom.notFound('id not found'));
     });
