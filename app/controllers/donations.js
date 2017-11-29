@@ -4,6 +4,8 @@ const Donation = require('../models/donation');
 const User = require('../models/user');
 const Candidate = require('../models/candidate');
 const Joi = require('joi');
+const os = require('os');
+
 
 function getLoggedInUser(request) {
   const userId = request.auth.credentials.loggedInUser;
@@ -17,6 +19,7 @@ exports.home = {
       reply.view('home', {
         title: 'Make a Donation',
         candidates: candidates,
+        lbserver: os.hostname(),
       });
     }).catch(err => {
       reply.redirect('/');
@@ -85,6 +88,7 @@ exports.report = {
             title: 'Donations to Date',
             donations: allDonations,
             totalDonated: totalDonated,
+            lbserver: os.hostname(),
           });
         })
         .catch(err => {

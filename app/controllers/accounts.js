@@ -38,7 +38,10 @@ exports.main = {
 exports.signup = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('signup', { title: 'Sign up for Donations' });
+    reply.view('signup', {
+      title: 'Sign up for Donations',
+      lbserver: os.hostname(),
+    });
   },
 
 };
@@ -46,7 +49,10 @@ exports.signup = {
 exports.login = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('login', { title: 'Login to Donations' });
+    reply.view('login', {
+      title: 'Login to Donations',
+      lbserver: os.hostname(),
+    });
   },
 
 };
@@ -147,7 +153,10 @@ exports.viewSettings = {
   handler: function (request, reply) {
     getLoggedInUser(request)
         .then(foundUser => {
-          reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
+          reply.view('settings', {
+            title: 'Edit Account Settings', user: foundUser,
+            lbserver: os.hostname(),
+          });
         })
         .catch(err => {
           reply.redirect('/');
