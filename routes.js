@@ -1,8 +1,19 @@
 const Accounts = require('./app/controllers/accounts');
 const Donations = require('./app/controllers/donations');
 const Assets = require('./app/controllers/assets');
+const os = require('os');
 
 module.exports = [
+
+  {
+    method: 'GET',
+    path: '/testlb/{param}',
+    config: { auth: false },
+    handler: function (request, reply) {
+      reply('Server: ' + os.hostname());
+      console.log('testing: ' + request.params.param);
+    }
+  },
 
   { method: 'GET', path: '/', config: Accounts.main },
   { method: 'GET', path: '/signup', config: Accounts.signup },

@@ -4,6 +4,7 @@ const Donation = require('../models/donation');
 const User = require('../models/user');
 const Candidate = require('../models/candidate');
 const Joi = require('joi');
+const os = require('os');
 
 function getLoggedInUser(request) {
   const userId = request.auth.credentials.loggedInUser;
@@ -16,6 +17,7 @@ exports.home = {
     Candidate.find({}).then(candidates => {
       reply.view('home', {
         title: 'Make a Donation',
+        lbserver: os.hostname(),
         candidates: candidates,
       });
     }).catch(err => {
