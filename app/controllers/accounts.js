@@ -2,6 +2,7 @@
 
 const User = require('../models/user');
 const Joi = require('joi');
+const os = require('os');
 
 function setCookie(request, userId) {
   request.cookieAuth.set({
@@ -26,7 +27,10 @@ function getLoggedInUser(request) {
 exports.main = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('main', { title: 'Welcome to Donations' });
+    reply.view('main', {
+      title: 'Welcome to Donations',
+      lbserver: os.hostname(),
+    });
   },
 
 };
