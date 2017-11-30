@@ -3,10 +3,10 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-let dbURI = 'mongodb://localhost/donation';
-
+// dbURI = 'mongodb://localhost/donation';
 //dbURI = 'mongodb://mytweetwebusername:mytweetwebpassword@ds245805.mlab.com:45805/mytweetweb';
-dbURI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
+//dbURI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
+let dbURI = 'mongodb://admin:password@10.0.3.76/admin';
 
 // heroku config:set NODE_ENV="production"
 // heroku config:set MONGOLAB_URI=mongodb://donationuser:password@ds251435.mlab.com:51435/donation
