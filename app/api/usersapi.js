@@ -5,7 +5,9 @@ const Boom = require('boom');
 const utils = require('./utils.js');
 
 exports.find = {
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
   handler: function (request, reply) {
     User.find({}).exec()
         .then(users => {
@@ -17,7 +19,9 @@ exports.find = {
 };
 
 exports.findOne = {
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
   handler: function (request, reply) {
     User.findOne({ _id: request.params.id })
         .then(user => {
@@ -33,7 +37,9 @@ exports.findOne = {
 };
 
 exports.create = {
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
   handler: function (request, reply) {
     const user = new User(request.payload);
     user.save()
@@ -46,7 +52,9 @@ exports.create = {
 };
 
 exports.deleteAll = {
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
   handler: function (request, reply) {
     User.remove({})
         .then(err => {
@@ -58,7 +66,9 @@ exports.deleteAll = {
 };
 
 exports.deleteOne = {
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
   handler: function (request, reply) {
     User.remove({ _id: request.params.id }).then(user => {
       reply(user).code(204);
@@ -69,9 +79,7 @@ exports.deleteOne = {
 };
 
 exports.authenticate = {
-
   auth: false,
-
   handler: function (request, reply) {
     const user = request.payload;
     User.findOne({ email: user.email }).then(foundUser => {
@@ -80,7 +88,6 @@ exports.authenticate = {
         reply({
           success: true,
           token: token,
-          user: foundUser,
         }).code(201);
       } else {
         reply({

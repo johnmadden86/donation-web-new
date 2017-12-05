@@ -1,4 +1,5 @@
 'use strict';
+
 // https://dry-cliffs-14757.herokuapp.com
 const SyncHttpService = require('./sync-http-service');
 const fixtures = require('./fixtures.json');
@@ -73,6 +74,18 @@ class DonationService {
 
   deleteOneDonationForCandidate(candidateId, donationId) {
     return this.httpService.delete('/api/candidates/' + candidateId + '/donations/' + donationId);
+  }
+
+  authenticate(user) {
+    return this.httpService.post('/api/users/authenticate', user);
+  }
+
+  login(user) {
+    return this.httpService.setAuth('/api/users/authenticate', user);
+  }
+
+  logout() {
+    this.httpService.clearAuth();
   }
 }
 

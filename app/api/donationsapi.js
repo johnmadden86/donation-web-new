@@ -5,7 +5,9 @@ const Boom = require('boom');
 const utils = require('./utils.js');
 
 exports.findAllDonations = {
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
   handler: function (request, reply) {
     Donation.find({})
         .populate('donor')
@@ -21,7 +23,9 @@ exports.findAllDonations = {
 
 exports.findDonationsForCandidate = {
 
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
 
   handler: function (request, reply) {
     Donation.find({ candidate: request.params.id })
@@ -36,7 +40,9 @@ exports.findDonationsForCandidate = {
 
 exports.makeDonation = {
 
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
 
   handler: function (request, reply) {
     const donation = new Donation(request.payload);
@@ -53,7 +59,9 @@ exports.makeDonation = {
 
 exports.makeDonation = {
 
-  auth: false, // {strategy: 'jwt',},
+  auth: {
+    strategy: 'jwt',
+  }, // {strategy: 'jwt',},
 
   handler: function (request, reply) {
     const donation = new Donation(request.payload);
@@ -77,7 +85,9 @@ exports.makeDonation = {
 
 exports.deleteAllDonations = {
 
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
 
   handler: function (request, reply) {
     Donation.remove({})
@@ -92,7 +102,9 @@ exports.deleteAllDonations = {
 
 exports.deleteAllDonationsForCandidate = {
 
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
 
   handler: function (request, reply) {
     const candidate = request.params.id;
@@ -108,7 +120,9 @@ exports.deleteAllDonationsForCandidate = {
 
 exports.deleteOneDonationForCandidate = {
 
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
 
   handler: function (request, reply) {
     const candidate = request.params.candidateId;

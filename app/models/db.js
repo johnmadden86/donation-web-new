@@ -17,6 +17,10 @@ dbURI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
 // database: donation
 // 20077700@mail.wit.ie
 // YA8W48JrVRq4
+process.env.NODE_ENV = 'production';
+process.env.MONGOLAB_URI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
+console.log('process.env.NODE_ENV: '  + process.env.NODE_ENV);
+console.log('process.env.MONGOLAB_URI: '  + process.env.MONGOLAB_URI);
 
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGOLAB_URI;

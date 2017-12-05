@@ -6,6 +6,7 @@ module.exports = [
   { method: 'GET', path: '/api/users', config: UsersApi.find },
   { method: 'GET', path: '/api/users/{id}', config: UsersApi.findOne },
   { method: 'POST', path: '/api/users', config: UsersApi.create },
+  { method: 'POST', path: '/api/users/authenticate', config: UsersApi.authenticate },
   { method: 'DELETE', path: '/api/users/{id}', config: UsersApi.deleteOne },
   { method: 'DELETE', path: '/api/users', config: UsersApi.deleteAll },
 
@@ -22,6 +23,5 @@ module.exports = [
   { method: 'DELETE', path: '/api/candidates/{id}/donations', config: DonationsApi.deleteAllDonationsForCandidate },
   { method: 'DELETE', path: '/api/candidates/{candidateId}/donations/{donationId}', config: DonationsApi.deleteOneDonationForCandidate },
 
-  { method: 'POST', path: '/api/users/authenticate', config: UsersApi.authenticate },
 ];
 

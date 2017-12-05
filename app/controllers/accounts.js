@@ -1,6 +1,8 @@
 'use strict';
 
 const User = require('../models/user');
+const utils = require('../api/utils');
+const Boom = require('boom');
 const Joi = require('joi');
 const os = require('os');
 
@@ -98,9 +100,7 @@ exports.register = {
 };
 
 exports.authenticate = {
-
   auth: false,
-
   validate: {
 
     payload: {
@@ -120,7 +120,6 @@ exports.authenticate = {
     },
 
   },
-
   handler: function (request, reply) {
     const user = request.payload;
     User.findOne({ email: user.email })
@@ -131,12 +130,10 @@ exports.authenticate = {
           } else {
             reply.redirect('/login');
           }
-        })
-        .catch(err => {
+        }).catch(err => {
           reply.redirect('/');
         });
   },
-
 };
 
 exports.logout = {

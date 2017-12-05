@@ -1,16 +1,16 @@
 'use strict';
 
 const Hapi = require('hapi');
-
+const corsHeaders = require('hapi-cors-headers');
+const utils = require('./app/api/utils');
 const server = new Hapi.Server();
 server.connection({ port: process.env.PORT || 4000 });
 
 require('./app/models/db');
 
-
 // 20077700@mail.wit.ie
 // YA8W48JrVRq4
-server.register([require('inert'), require('vision'), require('hapi-auth-cookie')], err => {
+server.register([require('inert'), require('vision'), require('hapi-auth-cookie'), require('hapi-auth-jwt2')], err => {
 
   if (err) {
     throw err;
@@ -28,16 +28,7 @@ server.register([require('inert'), require('vision'), require('hapi-auth-cookie'
     isCached: false,
   });
 
-  server.route(require('./routes'));
-  server.route(require('./routesapi'));
-
-  server.start((err) => {
-    if (err) {
-      throw err;
-    }
-
-    console.log('Server listening at:', server.info.uri);
-  });
+  server.ext('onPreResponse', corsHeaders);
 
   server.auth.strategy('standard', 'cookie', {
     password: 'secretpasswordnotrevealedtoanyone',
@@ -47,8 +38,25 @@ server.register([require('inert'), require('vision'), require('hapi-auth-cookie'
     redirectTo: '/login',
   });
 
+  server.auth.strategy('jwt', 'jwt', {
+    key: 'secretpasswordnotrevealedtoanyone',
+    validateFunc: utils.validate,
+    verifyOptions: { algorithms: ['HS256'] },
+  });
+
   server.auth.default({
     strategy: 'standard',
+  });
+
+  server.route(require('./routes'));
+  server.route(require('./routesapi'));
+
+  server.start((err) => {
+    if (err) {
+      throw err;
+    }
+
+    console.log('Server listening at:', server.info.uri);
   });
 
 });
