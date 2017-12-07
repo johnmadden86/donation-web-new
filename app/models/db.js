@@ -18,7 +18,7 @@ let dbURI = 'mongodb://admin:password@10.0.3.76/admin';
 // 20077700@mail.wit.ie
 // YA8W48JrVRq4
 process.env.NODE_ENV = 'production';
-process.env.MONGOLAB_URI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
+process.env.MONGOLAB_URI = 'mongodb://admin:password@10.0.3.76/admin';
 console.log('process.env.NODE_ENV: '  + process.env.NODE_ENV);
 console.log('process.env.MONGOLAB_URI: '  + process.env.MONGOLAB_URI);
 
