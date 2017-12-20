@@ -38,21 +38,18 @@ exports.findAllDonationsForCandidate = {
 
 exports.makeDonation = {
 
-  auth: false,
+  auth: {
+    strategy: 'jwt',
+  },
 
   handler: function (request, reply) {
     const donation = new Donation(request.payload);
     donation.candidate = request.params.id;
-    // const authorization = request.headers.authorization;
-    // const token = authorization.split(' ')[1];
-    // const userInfo = utils.decodeToken(token);
-    // donation.donor = User.findOne({ _id: userInfo.id });
+    donation.donor = utils.getUserIdFromRequest(request);
     donation.save()
         .then(newDonation => {
-          Donation.findOne(newDonation).populate('candidate').populate('donor');
-        })
-        .then(newDonation => {
           reply(newDonation).code(201);
+          return Donation.findOne(newDonation).populate('candidate').populate('donor');
         })
         .catch(err => {
           reply(Boom.badImplementation('error making donation'));
