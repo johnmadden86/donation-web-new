@@ -1,13 +1,13 @@
 'use strict';
 
 const Donation = require('../models/donation');
+const User = require('../models/user');
+const Candidate = require('../models/candidate');
 const Boom = require('boom');
 const utils = require('./utils.js');
 
 exports.findAllDonations = {
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
   handler: function (request, reply) {
     Donation.find({})
         .populate('donor')
@@ -21,11 +21,9 @@ exports.findAllDonations = {
   },
 };
 
-exports.findDonationsForCandidate = {
+exports.findAllDonationsForCandidate = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     Donation.find({ candidate: request.params.id })
@@ -40,14 +38,19 @@ exports.findDonationsForCandidate = {
 
 exports.makeDonation = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     const donation = new Donation(request.payload);
     donation.candidate = request.params.id;
+    // const authorization = request.headers.authorization;
+    // const token = authorization.split(' ')[1];
+    // const userInfo = utils.decodeToken(token);
+    // donation.donor = User.findOne({ _id: userInfo.id });
     donation.save()
+        .then(newDonation => {
+          Donation.findOne(newDonation).populate('candidate').populate('donor');
+        })
         .then(newDonation => {
           reply(newDonation).code(201);
         })
@@ -55,39 +58,12 @@ exports.makeDonation = {
           reply(Boom.badImplementation('error making donation'));
         });
   },
-};
-
-exports.makeDonation = {
-
-  auth: {
-    strategy: 'jwt',
-  }, // {strategy: 'jwt',},
-
-  handler: function (request, reply) {
-    const donation = new Donation(request.payload);
-    donation.candidate = request.params.id;
-    donation.donor = utils.getUserIdFromRequest(request);
-    donation.save()
-        .then(
-            (newDonation) => {Donation.findOne(newDonation).populate('candidate').populate('donor');}
-            )
-        .then(
-            (newDonation) => {reply(newDonation).code(201);}
-            )
-        .catch(
-            (err) => {
-          reply(Boom.badImplementation('error making donation'));
-        }
-        );
-  },
 
 };
 
 exports.deleteAllDonations = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     Donation.remove({})
@@ -102,9 +78,7 @@ exports.deleteAllDonations = {
 
 exports.deleteAllDonationsForCandidate = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     const candidate = request.params.id;
@@ -120,9 +94,7 @@ exports.deleteAllDonationsForCandidate = {
 
 exports.deleteOneDonationForCandidate = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     const candidate = request.params.candidateId;

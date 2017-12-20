@@ -4,10 +4,10 @@ const User = require('../models/user');
 const Boom = require('boom');
 const utils = require('./utils.js');
 
-exports.find = {
-  auth: {
-    strategy: 'jwt',
-  },
+exports.getAllUsers = {
+
+  auth: false,
+
   handler: function (request, reply) {
     User.find({}).exec()
         .then(users => {
@@ -18,10 +18,10 @@ exports.find = {
   },
 };
 
-exports.findOne = {
-  auth: {
-    strategy: 'jwt',
-  },
+exports.getOneUser = {
+
+  auth: false,
+
   handler: function (request, reply) {
     User.findOne({ _id: request.params.id })
         .then(user => {
@@ -36,10 +36,9 @@ exports.findOne = {
   },
 };
 
-exports.create = {
-  auth: {
-    strategy: 'jwt',
-  },
+exports.createNewUser = {
+
+  auth: false,
   handler: function (request, reply) {
     const user = new User(request.payload);
     user.save()
@@ -51,10 +50,9 @@ exports.create = {
   },
 };
 
-exports.deleteAll = {
-  auth: {
-    strategy: 'jwt',
-  },
+exports.deleteAllUsers = {
+
+  auth: false,
   handler: function (request, reply) {
     User.remove({})
         .then(err => {
@@ -65,10 +63,9 @@ exports.deleteAll = {
   },
 };
 
-exports.deleteOne = {
-  auth: {
-    strategy: 'jwt',
-  },
+exports.deleteOneUser = {
+
+  auth: false,
   handler: function (request, reply) {
     User.remove({ _id: request.params.id }).then(user => {
       reply(user).code(204);
@@ -78,7 +75,7 @@ exports.deleteOne = {
   },
 };
 
-exports.authenticate = {
+exports.authenticateUser = {
   auth: false,
   handler: function (request, reply) {
     const user = request.payload;

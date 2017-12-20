@@ -12,56 +12,65 @@ class DonationService {
     this.httpService = new SyncHttpService(baseUrl);
   }
 
-  getCandidates() {
-    return this.httpService.get('/api/candidates');
-  }
-
-  getCandidate(id) {
-    return this.httpService.get('/api/candidates/' + id);
-  }
-
-  createCandidate(newCandidate) {
-    return this.httpService.post('/api/candidates', newCandidate);
-  }
-
-  getUsers() {
-    return this.httpService.get('/api/users');
-  }
-
-  getUser(id) {
-    return this.httpService.get('/api/users/' + id);
+  logout() {
+    this.httpService.clearAuth();
   }
 
   createUser(newUser) {
     return this.httpService.post('/api/users', newUser);
   }
 
-  deleteAllCandidates() {
-    return this.httpService.delete('/api/candidates');
+  login(user) {
+    return this.httpService.setAuth('/api/users/authenticate', user);
+    // return this.httpService.post('/api/users/authenticate', user);
   }
 
-  deleteAllUsers() {
-    return this.httpService.delete('/api/users');
+  getUser(id) {
+    return this.httpService.get('/api/users/' + id);
   }
 
-  deleteOneCandidate(id) {
-    return this.httpService.delete('/api/candidates/' + id);
+  getUsers() {
+    return this.httpService.get('/api/users');
   }
 
   deleteOneUser(id) {
     return this.httpService.delete('/api/users/' + id);
   }
 
+  deleteAllUsers() {
+    return this.httpService.delete('/api/users');
+  }
+
+  getCandidate(id) {
+    return this.httpService.get('/api/candidates/' + id);
+  }
+
+  getCandidates() {
+    return this.httpService.get('/api/candidates');
+  }
+
+  createCandidate(newCandidate) {
+    return this.httpService.post('/api/candidates', newCandidate);
+  }
+
+  deleteOneCandidate(id) {
+    return this.httpService.delete('/api/candidates/' + id);
+  }
+
+  deleteAllCandidates() {
+    return this.httpService.delete('/api/candidates');
+  }
+
   makeDonation(id, donation) {
     return this.httpService.post('/api/candidates/' + id + '/donations', donation);
   }
 
-  getAllDonations() {
-    return this.httpService.get('/api/donations');
+  getDonation(id) {
+    return this.httpService.get('/api/candidates/' + id + '/donations');
   }
 
-  getDonations(id) {
-    return this.httpService.get('/api/candidates/' + id + '/donations');
+  getAllDonations() {
+    return this.httpService.get('/api/donations');
   }
 
   deleteAllDonations() {
@@ -74,18 +83,6 @@ class DonationService {
 
   deleteOneDonationForCandidate(candidateId, donationId) {
     return this.httpService.delete('/api/candidates/' + candidateId + '/donations/' + donationId);
-  }
-
-  authenticate(user) {
-    return this.httpService.post('/api/users/authenticate', user);
-  }
-
-  login(user) {
-    return this.httpService.setAuth('/api/users/authenticate', user);
-  }
-
-  logout() {
-    this.httpService.clearAuth();
   }
 }
 

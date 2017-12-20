@@ -3,11 +3,9 @@
 const Candidate = require('../models/candidate');
 const Boom = require('boom');
 
-exports.find = {
+exports.getAllCandidates = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     Candidate.find({}).exec().then(candidates => {
@@ -19,11 +17,9 @@ exports.find = {
 
 };
 
-exports.findOne = {
+exports.getOneCandidate = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     Candidate.findOne({ _id: request.params.id })
@@ -40,11 +36,9 @@ exports.findOne = {
 
 };
 
-exports.create = {
+exports.createNewCandidate = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     const candidate = new Candidate(request.payload);
@@ -57,10 +51,8 @@ exports.create = {
 
 };
 
-exports.deleteAll = {
-  auth: {
-    strategy: 'jwt',
-  },
+exports.deleteAllCandidates = {
+  auth: false,
 
   handler: function (request, reply) {
     Candidate.remove({}).then(err => {
@@ -72,11 +64,9 @@ exports.deleteAll = {
 
 };
 
-exports.deleteOne = {
+exports.deleteOneCandidate = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     Candidate.remove({ _id: request.params.id }).then(candidate => {

@@ -15,17 +15,31 @@ suite('User API tests', function () {
   const donationService = new DonationService(fixtures.donationService);
 
   beforeEach(function () {
-    donationService.deleteAllUsers();
+    donationService.login(users[0]);
   });
 
   afterEach(function () {
     donationService.deleteAllUsers();
+    donationService.logout();
+  });
+
+  test('get all users', function () {
+    users.forEach(user => {
+      donationService.createUser(user);
+    });
+    const returnedUsers = donationService.getUsers();
+    returnedUsers.forEach(user => {
+      delete user._id;
+      delete user.__v;
+    });
+    assert.deepEqual(users, returnedUsers);
   });
 
   test('create a user', function () {
     const returnedUser = donationService.createUser(newUser);
     assert(_.some([returnedUser], newUser), 'returnedUser must be a superset of newUser');
     assert.isDefined(returnedUser._id);
+    assert.isDefined(returnedUser.__v);
   });
 
   test('get user', function () {
@@ -47,14 +61,6 @@ suite('User API tests', function () {
     assert(donationService.getUser(c._id) === null);
   });
 
-  test('get all users', function () {
-    for (let u of users) {
-      donationService.createUser(u);
-    }
-
-    const allUsers = donationService.getUsers();
-    assert.equal(allUsers.length, users.length);
-  });
 
   test('get users detail', function () {
     for (let u of users) {
@@ -67,76 +73,17 @@ suite('User API tests', function () {
     }
   });
 
-  test('get all users empty', function () {
-    const allUsers = donationService.getUsers();
-    assert.equal(allUsers.length, 0);
-  });
 
   /*
-  test('get users', function () {
-    const url = 'http://localhost:4000/api/users';
-    let res = request('GET', url);
-    const users = JSON.parse(res.getBody('utf8'));
-    assert.equal(3, users.length);
-
-    assert.equal(users[0].firstName, 'Homer');
-    assert.equal(users[0].lastName, 'Simpson');
-    assert.equal(users[0].email, 'homer@simpson.com');
-    assert.equal(users[0].password, 'secret');
-
-    assert.equal(users[1].firstName, 'Marge');
-    assert.equal(users[1].lastName, 'Simpson');
-    assert.equal(users[1].email, 'marge@simpson.com');
-    assert.equal(users[1].password, 'secret');
-
-    assert.equal(users[2].firstName, 'Bart');
-    assert.equal(users[2].lastName, 'Simpson');
-    assert.equal(users[2].email, 'bart@simpson.com');
-    assert.equal(users[2].password, 'secret');
-  });
-
-  test('get one user', function () {
-    const allUsersUrl = 'http://localhost:4000/api/users';
-    let res = request('GET', allUsersUrl);
-    const users = JSON.parse(res.getBody('utf8'));
-
-    const oneUserUrl = allUsersUrl + '/' + users[0]._id;
-    res = request('GET', oneUserUrl);
-    const oneUser = JSON.parse(res.getBody('utf8'));
-
-    assert.equal(oneUser.firstName, 'Homer');
-    assert.equal(oneUser.lastName, 'Simpson');
-    assert.equal(oneUser.email, 'homer@simpson.com');
-    assert.equal(oneUser.password, 'secret');
-
-  });
-
-  test('delete a user', function () {
-    const allUsersUrl = 'http://localhost:4000/api/users';
-    let res = request('GET', allUsersUrl);
-    let oldUsers = JSON.parse(res.getBody('utf8'));
-
-    function randomIndex() {
-      return Math.floor(Math.random() * oldUsers.length);
+  test('get all users empty', function () {
+    for (let u of users) {
+      donationService.createUser(u);
     }
 
-    let index = randomIndex();
-    const oneUserUrl = allUsersUrl + '/' + oldUsers[index]._id;
-
-    request('DELETE', oneUserUrl);
-    res = request('GET', allUsersUrl);
-    const newUsers = JSON.parse(res.getBody('utf8'));
-
-    oldUsers.splice(index, 1);
-    assert.deepEqual(newUsers, oldUsers);
-  });
-
-  test('delete all users', function () {
-    const allUsersUrl = 'http://localhost:4000/api/users';
-    request('DELETE', allUsersUrl);
-    const res = request('GET', allUsersUrl);
-    const newUsers = JSON.parse(res.getBody('utf8'));
-    assert.deepEqual(newUsers, []);
+    assert.isAbove(users.length, 0, 'test fixtures created');
+    donationService.deleteAllUsers();
+    const allUsers = donationService.getUsers();
+    assert.equal(allUsers.length, 0);
   });
   */
 

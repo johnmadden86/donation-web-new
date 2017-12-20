@@ -20,6 +20,7 @@ suite('Auth API tests', function () {
     donationService.deleteAllUsers();
   });
 
+  /*
   test('authenticate', function () {
     const returnedUser = donationService.createUser(newUser);
     const response = donationService.authenticate(newUser);
@@ -35,6 +36,7 @@ suite('Auth API tests', function () {
     assert.equal(userInfo.email, returnedUser.email);
     assert.equal(userInfo.userId, returnedUser._id);
   });
+  */
 
   test('login-logout', function () {
     let returnedCandidates = donationService.getCandidates();

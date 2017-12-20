@@ -5,8 +5,8 @@ mongoose.Promise = global.Promise;
 
 // dbURI = 'mongodb://localhost/donation';
 //dbURI = 'mongodb://mytweetwebusername:mytweetwebpassword@ds245805.mlab.com:45805/mytweetweb';
-//dbURI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
-let dbURI = 'mongodb://admin:password@10.0.3.76/admin';
+let dbURI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
+// dbURI = 'mongodb://admin:password@10.0.3.76/admin';
 
 // heroku config:set NODE_ENV="production"
 // heroku config:set MONGOLAB_URI=mongodb://donationuser:password@ds251435.mlab.com:51435/donation
@@ -17,7 +17,7 @@ let dbURI = 'mongodb://admin:password@10.0.3.76/admin';
 // database: donation
 // 20077700@mail.wit.ie
 // YA8W48JrVRq4
-process.env.NODE_ENV = 'production';
+//process.env.NODE_ENV = 'production';
 process.env.MONGOLAB_URI = 'mongodb://donationuser:password@ds251435.mlab.com:51435/donation';
 console.log('process.env.NODE_ENV: '  + process.env.NODE_ENV);
 console.log('process.env.MONGOLAB_URI: '  + process.env.MONGOLAB_URI);

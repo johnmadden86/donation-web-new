@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{title}}</title>
-    <meta charset="UTF-8">
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
-    <link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.css">
-    <link rel="stylesheet" media="screen" href="css/main.css">
-    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+  <title>{{title}}</title>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
+  <link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.css">
+  <link rel="stylesheet" media="screen" href="css/main.css">
+  <link rel="shortcut icon" type="image/png" href="images/favicon.png">
 </head>
 <body>
 {{> welcomemenu }}
 
 <section class="ui raised segment">
-    <div class="ui grid">
-        <div class="ui ten wide column">
-            <div class="ui stacked fluid form segment">
-                <form action="/register" method="POST">
-                    <h3 class="ui header">Register</h3>
-                    <div class="two fields">
-                        <div class="field">
-                            <label>First Name</label>
-                            <input placeholder="First Name" type="text" name="firstName">
-                        </div>
-                        <div class="field">
-                            <label>Last Name</label>
-                            <input placeholder="Last Name" type="text" name="lastName">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Email</label>
-                        <input placeholder="Email" type="text" name="email">
-                    </div>
-                    <div class="field">
-                        <label>Password</label>
-                        <input type="password" name="password">
-                    </div>
-                    <button class="ui blue submit button">Submit</button>
-                </form>
-                {{> formerror }}
+  <div class="ui grid">
+    <div class="ui ten wide column">
+      <div class="ui stacked fluid form segment">
+        <!--<form action="/register" method="GET">-->
+        <form action="/register" method="POST">
+          <h3 class="ui header">Register</h3>
+          <div class="two fields">
+            <div class="field">
+              <label>First Name</label>
+              <input placeholder="First Name" type="text" name="firstName">
             </div>
-        </div>
-        <aside class="ui five wide column">
-            <img src="images/homer3.png" class="ui medium image">
-        </aside>
+            <div class="field">
+              <label>Last Name</label>
+              <input placeholder="Last Name" type="text" name="lastName">
+            </div>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input placeholder="Email" type="text" name="email">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password">
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <input type="text" name="phone">
+          </div>
+          <button class="ui blue submit button">Submit</button>
+        </form>
+        {{> formerror }}
+      </div>
     </div>
+    <aside class="ui five wide column">
+      <img src="images/homer3.png" class="ui medium image">
+    </aside>
+  </div>
 </section>
 </body>
 </html>
