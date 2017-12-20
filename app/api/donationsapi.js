@@ -49,9 +49,7 @@ exports.makeDonation = {
     // donation.donor = User.findOne({ _id: userInfo.id });
     donation.save()
         .then(newDonation => {
-          Donation.findOne(newDonation).populate('candidate').populate('donor');
-        })
-        .then(newDonation => {
+          Donation.findOne(newDonation).populate('candidate');//.populate('donor');
           reply(newDonation).code(201);
         })
         .catch(err => {
