@@ -86,6 +86,7 @@ exports.authenticateUser = {
             reply({
               success: true,
               token: token,
+              user: foundUser,
             }).code(201);
           } else {
             reply({
